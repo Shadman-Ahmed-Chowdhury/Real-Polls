@@ -1,14 +1,17 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from .models import Question, Choice
+from .models import Poll
 from django.urls import reverse
+from .forms import AddPollForm
+
+from django.forms import ModelForm 
 
 # Create your views here.
 
 def index(request):
-	latest_question_list = Question.objects.order_by('-pub_date')[:5]
+	questions_list = Poll.objects.all()
 	context = {
-		'latest_question_list':latest_question_list,
+		'questions_list': questions_list,
 	}
 	return render(request, 'polls/index.html', context)
 
@@ -30,13 +33,38 @@ def results(request, question_id):
 
 #vote for a question choice 
 
-def vote(request, question_id): 
-	question = get_object_or_404(Question, pk=question_id)
-	try: 
-		selected_choice = question.choice_set.get(pk=request.POST['choice'])
-	except(KeyError, Choice.DoesNotExist):
-		return render(request, 'polls/detail.html', {'question':question, 'error_message':"You didn't select a choice"})
-	else: 
-		selected_choice.votes += 1
-		selected_choice.save()
-		return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+def vote(request, poll_id): 
+	poll = Poll.objects.get(pk=poll_id)
+
+	if request.method == 'POST':
+		selected_option = request.POST['poll']
+		if selected_option == 'option1':
+			poll.option_one_count += 1
+		elif selected_option == 'option2':
+			poll.option_two_count += 1
+		elif selected_option == 'option3':
+			poll.option_three_count += 1
+		else: 
+			return HttpResponse(400, "Invalid Form")
+		poll.save()
+		return redirect('results', poll.id)
+	context = {
+		'poll':poll
+	}
+	return render(request, 'poll/vote.html')
+
+
+#Adding a new poll
+
+def add_poll(request):
+	if request.method == 'POST':
+		form = AddPollForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return redirect('polls:index')
+	else:
+		form = AddPollForm()
+	context = {
+		'form':form
+	}
+	return render(request, 'polls/add.html', context)
