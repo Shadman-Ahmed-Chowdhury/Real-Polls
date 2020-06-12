@@ -1,6 +1,85 @@
-<nav class="navbar navbar-dark bg-primary mb-4">
+<style type="text/css">
+	nav {
+		margin: 0; 
+		font: 16px 'Open Sans', arial, sans-serif; 
+		
+	}
+	.navbar .nav-item a {
+		color: white !important;
+	}
+	ul {
+		margin: auto 0;
+		
+		padding: 0;
+		list-style: none;		
+		display: table;
+		text-align: center; 
+
+	}
+	li {
+		display: table-cell; 
+		position: relative; 
+		padding: 10px 5px;
+	}
+	.navbar .nav-item a {
+		color: #fff; 
+		text-decoration: none; 
+		letter-spacing: 0.12em; 
+		display: inline-block;
+		padding: 15px 20px;
+		position: relative;
+	}
+	a:after {
+		background: none repeat scroll 0 0 trasparent; 
+		bottom: 0; 
+		content: "";
+		display: block; 
+		height: 2px; 
+		left: 50%; 
+		position: absolute; 
+		background: #fff; 
+		transition: width 0.3s ease 0s, left 0.3s ease 0s;
+		width: 0;
+	}
+	a:hover:after {
+		width: 100%; 
+		left: 0; 
+	}
+	@media screen and(max-height: 300px) {
+		ul {
+			margin-top: 40px; 
+		}
+	}
+	
+</style>
+
+
+<nav class="navbar navbar-expand-lg navbar-inverse navbar-dark bg-primary mb-4">
 	<div class="container">
-		<a href="/" class="navbar-brand">Real Polls</a>
-		<a href="{% url 'polls:add_poll' %}" class="navbar-brand">Add a Poll</a>
+
+		<!--Navbar Title-->
+		<a href="/" class="navbar-brand ">Real Polls</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" 
+			data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		</button>
+
+		<!--Navbar Menu-->
+		 <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		    <ul class="nav navbar-nav mr-auto">
+		      <li class="nav-item">
+		        <a class="nav-link" href="{% url 'polls:add_poll' %}">Add a poll </a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" href="#">About</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link " href="#">Contact</a>
+		      </li>
+		    </ul>
+		</div>
+
 	</div>
 </nav>
+
+

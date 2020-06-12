@@ -4,12 +4,12 @@
 	<h1 class="text-cente mb-3">
 		Poll Questions
 	</h1>
-	{% if questions_list %}
-		{% for each_question in questions_list %}
+	{% if polls %}
+		{% for poll in polls %}
 			<div class="card mb-3">
 				<div class="card-body">
-					<p class="lead"> {{ each_question.question }} </p>
-					<a class="btn btn-primary" href="#">
+					<p class="lead"> {{ poll.question }} </p>
+					<a class="btn btn-primary" href="{% url 'polls:vote' poll.id %}">
 						Vote Now
 					</a>
 					<a class="btn btn-secondary" href="#" >

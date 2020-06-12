@@ -1,21 +1,32 @@
 {% extends "base.html" %}
 {% block content %}
 	<h1 class="mb-5 text-center">
-		{{ question.question_text }}
+		{{ poll.question }}
 	</h1>
 
 	<ul class="list-group mb-5">
-		{% for choice in question.choice_set.all %}
-			<li class="list-group-item">
-				{{ choice.choice_text }} 
-				<span class="badge badge-success float-right">
-					{{ choice.votes }} vote{{ choice.votes | pluralize }} 	
-				</span>
-			</li>
+		
+		<li class="list-group-item">
+			{{ poll.option_one }} 
+			<span class="badge badge-success float-right">
+				{{ poll.option_one_count }} vote{{ poll.option_one_count | pluralize }} 	
+			</span>
+		</li>
+		<li class="list-group-item">
+			{{ poll.option_two }} 
+			<span class="badge badge-success float-right">
+				{{ poll.option_two_count }} vote{{ poll.option_two_count | pluralize }} 	
+			</span>
+		</li>
+		<li class="list-group-item">
+			{{ poll.option_three }} 
+			<span class="badge badge-success float-right">
+				{{ poll.option_three_count }} vote{{ poll.option_three_count | pluralize }} 	
+			</span>
+		</li>
 				
-		{% endfor %}
 	</ul>
 	
 	<a href="{% url 'polls:index' %}" class="btn btn-secondary">Back to Polls</a>
-	<a href="{% url 'polls:detail' question.id %}" class="btn btn-dark">Vote again?</a>
+	<a href="{% url 'polls:vote' poll.id %}" class="btn btn-dark">Vote again?</a>
 {% endblock content %}

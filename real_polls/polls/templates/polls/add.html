@@ -1,9 +1,26 @@
-<h3>Polling Form</h3>
+{% load crispy_forms_tags %}
 
-<hr>
+<head>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
 
-<form method="POST">
-	{% csrf_token %}
-	{{form.as_p}}
-	<input type="submit" value="Submit">
-</form>
+
+
+<div class="container">
+	<h3>Polling Form</h3>
+
+	<hr>
+
+	<form method="post">
+		{% csrf_token%}
+		{{ form.question | as_crispy_field }}
+
+		{{ form.option_one | as_crispy_field }}
+		{{ form.option_two | as_crispy_field }}
+		{{ form.option_three | as_crispy_field }}
+
+		<button type="submit" class="btn btn-success">Add Poll</button>
+	</form>
+
+		
+</div>

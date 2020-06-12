@@ -9,9 +9,9 @@ from django.forms import ModelForm
 # Create your views here.
 
 def index(request):
-	questions_list = Poll.objects.all()
+	polls = Poll.objects.all()
 	context = {
-		'questions_list': questions_list,
+		'polls': polls,
 	}
 	return render(request, 'polls/index.html', context)
 
@@ -26,9 +26,12 @@ def detail(request, question_id):
 
 #Get Question and display result
 
-def results(request, question_id):
-	question = get_object_or_404(Question, pk=question_id)
-	return render(request, 'polls/results.html', {'question':question})
+def results(request, poll_id):
+	poll = Poll.objects.get(pk=poll_id)
+	context = {
+		'poll': poll
+	}
+	return render(request, 'polls/results.html', context)
 
 
 #vote for a question choice 
@@ -47,11 +50,11 @@ def vote(request, poll_id):
 		else: 
 			return HttpResponse(400, "Invalid Form")
 		poll.save()
-		return redirect('results', poll.id)
+		return redirect('polls:results', poll.id)
 	context = {
 		'poll':poll
 	}
-	return render(request, 'poll/vote.html')
+	return render(request, 'polls/vote.html', context)
 
 
 #Adding a new poll
